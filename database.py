@@ -2,9 +2,9 @@
 
 import os
 import generator
-from datetime import datetime
+# from datetime import datetime
 # from faker import Faker
-from models import Base, Person#, Address, SampleData
+from models import Base, User
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -68,16 +68,18 @@ def select_db(name):
 def do_sandbox_test():
     session = DBSession()
 
-    my_sample = SampleData()
-    my_sample.text = 'lol test 2'
-    my_sample.sample_date = datetime.now()
-    session.add(my_sample)
-
+    my_user = User(name=98, age='2', is_admin='')
+    session.add(my_user)
     session.commit()
 
-    first_sample = session.query(SampleData).first()
-    if my_sample.sample_date == first_sample.sample_date:
+    new_user = session.query(User).filter(User.age == 200).first()
+    if my_user.name == new_user.name:
         print 'yup!'
     else:
         print 'nope.'
+
+    print 'my_user.id: ' + str(my_user.id)
+    print 'new_user.id: ' + str(new_user.id)
+
+
 
